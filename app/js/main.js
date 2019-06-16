@@ -78,7 +78,7 @@ class CharType {
 }
 
 class Chaldean {
-	isNameLucky (moolank, bhagyank, namank) {
+	static isNameLucky (moolank, bhagyank, namank) {
         var output;
         if (moolank == namank) {
             output = "is Extremely Lucky";
@@ -169,6 +169,7 @@ app.on({page: 'home', preventClose: false, content: null}, function(activity) {
 		dateOfBirth = document.querySelector('#dob-input').value;
 		document.querySelector('#dob-label').innerHTML = dateOfBirth;
 		document.querySelector('#dob-input').value = '';
+		phonon.panel('#dob-panel').close();
 	}
 	
 	var onPanSubmit = function(e) {
@@ -176,6 +177,7 @@ app.on({page: 'home', preventClose: false, content: null}, function(activity) {
 		fullName = document.querySelector('#pan-input').value;
 		document.querySelector('#pan-label').innerHTML = fullName;
 		document.querySelector('#pan-input').value = '';
+		phonon.panel('#pan-panel').close();
 		genReport();
 	}
 
@@ -188,6 +190,7 @@ app.on({page: 'home', preventClose: false, content: null}, function(activity) {
 		o.namank = Numerology.actualValue(Numerology.sumAlphabet(fullName));
 		o.swarank = Numerology.actualValue(Numerology.sumVowel(fullName));
 		o.vyanjanank = Numerology.actualValue(Numerology.sumConsonant(fullName));
+		o.luckiness = Chaldean.isNameLucky(o.moolank, o.bhagyank, o.namank);
 		renderReport(o);
 	}
 
@@ -198,6 +201,7 @@ app.on({page: 'home', preventClose: false, content: null}, function(activity) {
 		document.querySelector('#report-namank').innerHTML = o.namank;
 		document.querySelector('#report-swarank').innerHTML = o.swarank;
 		document.querySelector('#report-vyanjanank').innerHTML = o.vyanjanank;
+		document.querySelector('#report-luckiness').innerHTML = o.luckiness;
 	}
 
 	activity.onCreate(function() {
